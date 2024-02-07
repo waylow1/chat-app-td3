@@ -1,11 +1,14 @@
 <script setup>
 import {computed} from 'vue'
+import {TrashIcon} from '@heroicons/vue/24/solid'
  const props = defineProps({
     message: {
         type: Object,
         required: true
     }
 })
+
+const emit = defineEmits(['delete'])
 
 const formatDate = (date) =>{
     let formattedDay = date.toLocaleDateString(); 
@@ -28,7 +31,7 @@ const formattedDate = computed(()=>{
         <span class="text-xs text-opacity-80 text-gray-300">
             {{ formattedDate }}
         </span>
-        <br>
         {{ message.text }}
+        <button @click="emit('delete',message.id)" class="p-1  rounded-md ml-1 rounded-full hover:bg-slate-500" > <TrashIcon class="w-4 h-4"/> </button>
     </div>
 </template>
