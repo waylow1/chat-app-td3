@@ -7,25 +7,21 @@ import {useRouter} from 'vue-router'
 const {push: routerPush} = useRouter();
 
 const email = ref('')
-const username = ref('')
 const password = ref('')
 
 const onSubmit = async()=>{
-    if(!email.value || !username.value || !password.value) return;
-   const {error} = await supabase.auth.signUp({
+    if(!email.value && !password.value) return;
+
+    const {error} = await supabase.auth.signInWithPassword({
         email: email.value,
-        password: password.value,
-        options:{
-            data:{
-                username:username.value
-            }
-        }
+        password: password.value
     })
-    if(error) {
+    if(error){
         alert(error.message)
     }else{
-        routerPush('/')  
+        routerPush('/')
     }
+    
 }
 
 </script>
@@ -37,13 +33,9 @@ const onSubmit = async()=>{
         <input type="email" id="email" v-model="email" class="p-2 bg-slate-500"  required/>
       </div>
       <div class="flex flex-col">
-        <label for="username">Username</label>
-        <input type="text" id="username" v-model="username" class="p-2 bg-slate-500" required />
-      </div>
-      <div class="flex flex-col">
         <label for="password">Mot de passe</label>
         <input type="password" id="password" v-model="password" class="p-2 bg-slate-500" required/>
       </div>
-      <button type="submit" class="p-2 mt-4 bg-blue-500 rounded-md">Créer un compte</button>
+      <button type="submit" class="p-2 mt-4 bg-blue-500 rounded-md">Se connecter</button>
     </form>
   </template>

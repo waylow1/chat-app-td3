@@ -7,7 +7,6 @@ import {TrashIcon} from '@heroicons/vue/24/solid'
         required: true
     }
 })
-
 const emit = defineEmits(['delete'])
 
 const formatDate = (date) =>{
