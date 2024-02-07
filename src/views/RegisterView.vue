@@ -24,7 +24,7 @@ const onSubmit = async()=>{
     if(error) {
         alert(error.message)
     }else{
-        routerPush('/')  
+        routerPush({name:'chat'})  
     }
 }
 
