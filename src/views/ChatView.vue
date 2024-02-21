@@ -1,10 +1,10 @@
 <script setup>
-import {ref} from 'vue'
+import {onMounted, ref} from 'vue'
 import ChatMessage from '@/components/ChatMessage.vue'
 import AppNavbar  from '@/components/AppNavbar.vue';
 import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
-import {insertMessage} from '@/api/messages'
+import {insertMessage,fetchMessages} from '@/api/messages'
 
 
 
@@ -12,6 +12,14 @@ const {user} = storeToRefs(useUserStore());
 
 const messageText = ref('');
 const messageList = ref([]);
+
+
+onMounted(async ()=>{
+    messageList.value = await fetchMessages();
+})
+
+
+
 const textarea = ref(null)
 
 const addMessage = async ()=>{
