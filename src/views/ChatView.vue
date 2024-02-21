@@ -1,6 +1,8 @@
 <script setup>
 import {ref} from 'vue'
 import ChatMessage from '@/components/ChatMessage.vue'
+import AppNavbar  from '@/components/AppNavbar.vue';
+
 
 
 const messageText = ref('');
@@ -30,6 +32,7 @@ const deleteMessage = (id)=>{
 </script>
 
 <template>
+    <AppNavbar/>
     <div v-for="(message,index) in messageList" class="p-4" :key="index">
         <ChatMessage @delete="deleteMessage" :message="message"></Chatmessage>
     </div>
