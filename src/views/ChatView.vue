@@ -2,26 +2,26 @@
 import {ref} from 'vue'
 import ChatMessage from '@/components/ChatMessage.vue'
 import AppNavbar  from '@/components/AppNavbar.vue';
+import { useUserStore } from '@/stores/user';
+import { storeToRefs } from 'pinia';
+import {insertMessage} from '@/api/messages'
 
 
+
+const {user} = storeToRefs(useUserStore());
 
 const messageText = ref('');
 const messageList = ref([]);
 const textarea = ref(null)
 
-const addMessage = ()=>{
-    messageList.value.push({
-        id: Math.random().toString(32).slice(2),
-        text: messageText.value,
-        date: new Date(),
-        user: {
-            username: "M.Meignen",
-            avatarUrl:'https://i1.rgstatic.net/ii/profile.image/969357991620610-1608124363985_Q512/Pierrick-Meignen.jpg'
-        }
-    });
-    messageText.value="";
-    textarea.value.focus()
+const addMessage = async ()=>{
+   
+    await insertMessage(messageText.value, user.value.id)
+
+    messageText.value='';
+    textarea.value.focus();
 }
+
 const deleteMessage = (id)=>{
     messageList.value = messageList.value.filter((message)=>{
        return message.id!=id
