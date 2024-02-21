@@ -17,7 +17,8 @@ const formatDate = (date) =>{
 }
 
 const formattedDate = computed(()=>{
-    const date = props.message.date 
+    const date =  new Date(props.message.created_at); 
+    
     return formatDate(date);
 
 })
@@ -25,8 +26,8 @@ const formattedDate = computed(()=>{
 
 <template>
     <div class="flex">
-        <img :src="message.user.avatarUrl" alt="avatarImage" class="h-7 w-7 rounded-full">
-        {{ message.user.username }}
+        <img :src="message.author.avatar_url" alt="avatarImage" class="h-7 w-7 rounded-full">
+        {{ message.author.username }}
         <span class="text-xs text-opacity-80 text-gray-300">
             {{ formattedDate }}
         </span>
