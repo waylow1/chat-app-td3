@@ -1,6 +1,9 @@
 <script setup>
 import {computed} from 'vue'
 import {TrashIcon} from '@heroicons/vue/24/solid'
+import { storeToRefs } from 'pinia';
+import { useUserStore } from '@/stores/user';
+
  const props = defineProps({
     message: {
         type: Object,
@@ -8,6 +11,8 @@ import {TrashIcon} from '@heroicons/vue/24/solid'
     }
 })
 const emit = defineEmits(['delete'])
+
+const {user} = storeToRefs(useUserStore());
 
 const formatDate = (date) =>{
     let formattedDay = date.toLocaleDateString(); 
@@ -22,6 +27,11 @@ const formattedDate = computed(()=>{
     return formatDate(date);
 
 })
+
+const isConnected = computed(()=>{
+    return props.message.author.id === user.value?.id
+})
+
 </script>
 
 <template>
@@ -31,10 +41,7 @@ const formattedDate = computed(()=>{
         <span class="text-xs text-opacity-80 text-gray-300">
             {{ formattedDate }}
         </span>
-        
-        
-        {{ message.content }}
-        
-        <button @click="emit('delete',message.id)" class="p-1  rounded-md ml-1 rounded-full hover:bg-slate-500" > <TrashIcon class="w-4 h-4"/> </button>
+        <button @click="emit('delete',message.id)" class="p-1  rounded-md ml-1 rounded-full hover:bg-slate-500" v-if="isConnected" ><TrashIcon class="w-4 h-4"/> </button>    
     </div>
+    {{ message.content }}
 </template>

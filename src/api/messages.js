@@ -21,6 +21,10 @@ export const fetchMessages = async ()=>{
     messageList.value = data.reverse()
 }
 
+export const deleteMessageById = async (id)=>{
+    await supabase.from('messages').delete().match({id})
+}
+
 export const subscribeToMessages =()=>{
     supabase.channel('messages_channel').on('postgres_changes',{
         event:'*',
