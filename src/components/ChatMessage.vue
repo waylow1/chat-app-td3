@@ -26,12 +26,15 @@ const formattedDate = computed(()=>{
 
 <template>
     <div class="flex">
-        <img :src="message.author.avatar_url" alt="avatarImage" class="h-7 w-7 rounded-full">
+        <img src="../assets/King.png" alt="avatarImage" class="h-7 w-7 rounded-full">
         {{ message.author.username }}
         <span class="text-xs text-opacity-80 text-gray-300">
             {{ formattedDate }}
         </span>
-        {{ message.text }}
+        
+        
+        {{ message.content }}
+        
         <button @click="emit('delete',message.id)" class="p-1  rounded-md ml-1 rounded-full hover:bg-slate-500" > <TrashIcon class="w-4 h-4"/> </button>
     </div>
 </template>
